@@ -1518,7 +1518,7 @@
       gap: 6px;
       margin-bottom: 28px;
     }
-    .chip {
+    .cat-chips .chip {
       padding: 4px 12px;
       border-radius: 5px;
       font-size: 0.68rem;
@@ -1526,9 +1526,9 @@
       letter-spacing: 0.03em;
       white-space: nowrap;
     }
-    .chip-light { background: rgba(255,255,255,0.1);  border: 1px solid rgba(255,255,255,0.22); color: rgba(255,255,255,0.9); }
-    .chip-navy  { background: var(--navy);             color: var(--gold-light); }
-    .chip-pale  { background: var(--gold-pale);        border: 1px solid rgba(201,164,74,0.35); color: var(--navy); }
+    .cat-chips .chip-light { background: rgba(255,255,255,0.1);  border: 1px solid rgba(255,255,255,0.22); color: rgba(255,255,255,0.9); }
+    .cat-chips .chip-navy  { background: var(--navy);             color: var(--gold-light); }
+    .cat-chips .chip-pale  { background: var(--gold-pale);        border: 1px solid rgba(201,164,74,0.35); color: var(--navy); }
 
     .cat-wa-btn {
       display: inline-flex;
@@ -1623,6 +1623,11 @@
       background: var(--gold-light);
       transform: translateY(-2px);
       box-shadow: 0 8px 28px rgba(201,164,74,0.45);
+    }
+    .cat-wa-btn:focus-visible,
+    .cat-dl-btn:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 3px;
     }
 
     @media (max-width: 768px) {
