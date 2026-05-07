@@ -1441,13 +1441,17 @@
 
     .cat-blocks {
       overflow: hidden;
-      margin: 32px -24px 0;
+      width: 80%;
+      max-width: 1200px;
+      margin: 32px auto 0;
+      border-radius: 12px;
     }
 
     .cat-block {
       display: flex;
       align-items: stretch;
       border-top: 1px solid rgba(201,164,74,0.12);
+      overflow: hidden;
     }
     .cat-block.rev { flex-direction: row-reverse; }
     .cat-block.bg-navy  { background: var(--navy-dark); }
