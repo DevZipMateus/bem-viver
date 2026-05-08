@@ -1,0 +1,292 @@
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Raleway:wght@300;400;500;600;700&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #1B2B5E; --navy-d: #111D40; --gold: #C9A44A; --gold-l: #E2BF72;
+    --gold-p: #F5EDD4; --cream: #FAF7F2; --cream2: #F2EBD9; --green: #2D7A52;
+    --text: #1A1A2E; --mid: #4A4A6A;
+  }
+
+  .q-header { margin-bottom: 20px; }
+  .q-header h2 { font-size: 1.2rem; margin-bottom: 4px; }
+
+  /* === preview frame === */
+  .preview-frame {
+    background: var(--cream);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 2px solid rgba(201,164,74,.3);
+    margin-bottom: 20px;
+  }
+  .frame-label {
+    background: var(--navy-d);
+    padding: 8px 16px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .frame-label span { color: rgba(255,255,255,.5); font-size: .7rem; font-family: monospace; }
+  .frame-label em { color: var(--gold-l); font-size: .7rem; font-style: normal; font-weight: 700; }
+
+  /* section-separator */
+  .sep {
+    padding: 28px 24px 0;
+    text-align: center;
+  }
+  .sep-label {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: .68rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .sep-label::before, .sep-label::after {
+    content: ''; display: block; width: 40px; height: 1px; background: var(--gold);
+  }
+  .sep h3 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.6rem; font-weight: 600; color: var(--navy);
+    line-height: 1.2; margin-bottom: 6px;
+  }
+  .sep p {
+    font-size: .8rem; color: var(--mid); max-width: 520px; margin: 0 auto 20px;
+    line-height: 1.6;
+  }
+
+  /* alternating blocks */
+  .cat-block {
+    display: flex; align-items: stretch;
+    border-top: 1px solid rgba(201,164,74,.12);
+  }
+  .cat-block.rev { flex-direction: row-reverse; }
+  .cat-block.navy-bg { background: var(--navy); }
+  .cat-block.cream-bg { background: var(--cream2); }
+  .cat-block.white-bg { background: white; }
+
+  .cat-img-wrap {
+    width: 42%; flex-shrink: 0;
+    position: relative; overflow: hidden;
+    min-height: 160px;
+  }
+  .cat-img-wrap img {
+    width: 100%; height: 100%; object-fit: cover;
+    display: block;
+  }
+  .cat-img-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(27,43,94,.15) 0%, transparent 60%);
+  }
+
+  .cat-content {
+    flex: 1; padding: 24px 28px;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .cat-tag {
+    font-size: .65rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .tag-gold { color: var(--gold); }
+  .tag-gold-l { color: var(--gold-l); }
+  .cat-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.3rem; font-weight: 600; line-height: 1.2;
+    margin-bottom: 8px;
+  }
+  .title-navy { color: var(--navy); }
+  .title-white { color: white; }
+  .cat-desc {
+    font-size: .78rem; line-height: 1.6; margin-bottom: 12px;
+  }
+  .desc-mid { color: var(--mid); }
+  .desc-light { color: rgba(255,255,255,.75); }
+  .cat-products { display: flex; flex-wrap: wrap; gap: 5px; }
+  .chip {
+    padding: 3px 10px; border-radius: 4px;
+    font-size: .65rem; font-weight: 600; letter-spacing: .03em;
+  }
+  .chip-navy { background: var(--navy); color: var(--gold-l); }
+  .chip-gold { background: var(--gold-p); border: 1px solid rgba(201,164,74,.4); color: var(--navy); }
+  .chip-light { background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2); color: rgba(255,255,255,.9); }
+
+  /* gold accent line on side */
+  .cat-block { position: relative; }
+
+  /* download strip */
+  .dl-strip {
+    background: linear-gradient(135deg, var(--navy-d) 0%, #253580 100%);
+    padding: 20px 24px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    flex-wrap: wrap;
+  }
+  .dl-left { display: flex; align-items: center; gap: 14px; }
+  .dl-icon {
+    width: 40px; height: 40px; border-radius: 8px;
+    background: rgba(201,164,74,.15); border: 1px solid rgba(201,164,74,.3);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .dl-icon svg { width: 20px; height: 20px; fill: var(--gold-l); }
+  .dl-text strong { color: white; font-size: .85rem; display: block; }
+  .dl-text span { color: rgba(255,255,255,.5); font-size: .7rem; }
+  .dl-btn {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: var(--gold); color: var(--navy-d);
+    border: none; border-radius: 8px;
+    padding: 9px 20px; font-family: 'Raleway', sans-serif;
+    font-size: .75rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(201,164,74,.3);
+  }
+
+  /* notes below */
+  .notes { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .note-card {
+    background: white; border-radius: 10px; padding: 14px 16px;
+    border-left: 3px solid var(--gold);
+  }
+  .note-card h4 { font-size: .8rem; color: var(--navy); margin-bottom: 4px; }
+  .note-card p { font-size: .72rem; color: var(--mid); line-height: 1.5; }
+</style>
+
+<div class="q-header">
+  <h2>Design dos Blocos Alternados</h2>
+  <p class="subtitle">Preview de como a nova parte vai aparecer abaixo dos 6 cards de benefícios existentes. Cada categoria tem cor de fundo alternada (navy / creme / branco) e os produtos do catálogo como chips de destaque.</p>
+</div>
+
+<!-- PREVIEW -->
+<div class="preview-frame">
+  <div class="frame-label">
+    <span>#produtos → abaixo dos features cards existentes</span>
+    <em>novo conteúdo ↓</em>
+  </div>
+
+  <!-- sub-header -->
+  <div class="sep">
+    <div class="sep-label">Catálogo completo</div>
+    <h3>Conheça nossas <em style="font-style:italic;color:var(--gold)">categorias</em></h3>
+    <p>Da cozinha ao café da manhã, temos tudo para transformar sua experiência à mesa.</p>
+  </div>
+
+  <!-- 1. PANELAS — navy bg, img left -->
+  <div class="cat-block navy-bg">
+    <div class="cat-img-wrap">
+      <img src="/panelas.png" alt="Panelas e Conjuntos Royal Prestige">
+      <div class="cat-img-overlay"></div>
+    </div>
+    <div class="cat-content">
+      <div class="cat-tag tag-gold-l">Categoria 01</div>
+      <div class="cat-title title-white">Panelas e Conjuntos</div>
+      <div class="cat-desc desc-light">Sistemas de cozinha em aço cirúrgico 316L fabricados na Itália. Cozinhe sem óleo ou água com a tecnologia Redi-Temp™ e garantia de até 50 anos.</div>
+      <div class="cat-products">
+        <span class="chip chip-light">Profissional 15 Pç</span>
+        <span class="chip chip-light">Familiar 10 Pç</span>
+        <span class="chip chip-light">Clássico 7 Pç</span>
+        <span class="chip chip-light">Wok</span>
+        <span class="chip chip-light">Panela de Pressão</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. ELETRODOMÉSTICOS — cream bg, img right -->
+  <div class="cat-block rev cream-bg">
+    <div class="cat-img-wrap">
+      <img src="/eletrodomesticos.png" alt="Eletrodomésticos Royal Prestige">
+    </div>
+    <div class="cat-content">
+      <div class="cat-tag tag-gold">Categoria 02</div>
+      <div class="cat-title title-navy">Eletrodomésticos</div>
+      <div class="cat-desc desc-mid">Todo o poder que sua cozinha precisa. Liquidificador de alta potência com motor de 2cv e 20 mil RPM, e extrator de sucos lento MaXtractor.</div>
+      <div class="cat-products">
+        <span class="chip chip-navy">Power Blender</span>
+        <span class="chip chip-navy">MaXtractor</span>
+        <span class="chip chip-gold">3 filtros intercambiáveis</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. FACAS — white bg, img left -->
+  <div class="cat-block white-bg">
+    <div class="cat-img-wrap">
+      <img src="/facas.png" alt="Facas Royal Prestige">
+    </div>
+    <div class="cat-content">
+      <div class="cat-tag tag-gold">Categoria 03</div>
+      <div class="cat-title title-navy">Facas e muito mais</div>
+      <div class="cat-desc desc-mid">Lâminas de aço inoxidável de alta qualidade, já afiadas de fábrica. Cepo de madeira acácia natural com afiador integrado para até 17 ferramentas.</div>
+      <div class="cat-products">
+        <span class="chip chip-navy">Jogo 5 Peças Chef</span>
+        <span class="chip chip-navy">Facas para Churrasco</span>
+        <span class="chip chip-gold">Cepo Acácia</span>
+        <span class="chip chip-gold">Tábua de Bambu</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. CAFÉ — navy bg, img right -->
+  <div class="cat-block rev navy-bg">
+    <div class="cat-img-wrap">
+      <img src="/cafe,cha,chocolate.png" alt="Café, chá e chocolate">
+    </div>
+    <div class="cat-content">
+      <div class="cat-tag tag-gold-l">Categoria 04</div>
+      <div class="cat-title title-white">Café, chá e chocolate</div>
+      <div class="cat-desc desc-light">Utensílios ideais para aproveitar os momentos mais doces do dia. Da chaleira ExperTea à cafeteira espresso e canecas térmicas em aço inoxidável.</div>
+      <div class="cat-products">
+        <span class="chip chip-light">ExperTea</span>
+        <span class="chip chip-light">Royal Espresso 10 Xícaras</span>
+        <span class="chip chip-light">Canecas Térmicas</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. ACESSÓRIOS — cream bg, img left -->
+  <div class="cat-block cream-bg">
+    <div class="cat-img-wrap">
+      <img src="/acessorios.png" alt="Acessórios de Cozinha">
+    </div>
+    <div class="cat-content">
+      <div class="cat-tag tag-gold">Categoria 05</div>
+      <div class="cat-title title-navy">Acessórios de Cozinha</div>
+      <div class="cat-desc desc-mid">Complemente sua cozinha com acessórios pensados para facilitar o preparo e apresentação dos seus pratos.</div>
+      <div class="cat-products">
+        <span class="chip chip-navy">Utensílios Silicone</span>
+        <span class="chip chip-navy">Espátula Deluxe</span>
+        <span class="chip chip-gold">Linha Premium</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- DOWNLOAD -->
+  <div class="dl-strip">
+    <div class="dl-left">
+      <div class="dl-icon">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 7V3.5L18.5 9H13zm-1 8l-4-4h3V13h2v2h3l-4 4z"/></svg>
+      </div>
+      <div class="dl-text">
+        <strong>Catálogo completo de Produtos Royal Prestige</strong>
+        <span>PDF · 39 páginas · todas as linhas e especificações técnicas</span>
+      </div>
+    </div>
+    <button class="dl-btn">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7,10 12,15 17,10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Baixar Catálogo PDF
+    </button>
+  </div>
+</div>
+
+<!-- NOTES -->
+<div class="notes">
+  <div class="note-card">
+    <h4>Cores de fundo alternadas</h4>
+    <p>Navy escuro → Creme → Branco → Navy → Creme. Cria ritmo visual sem depender só das imagens.</p>
+  </div>
+  <div class="note-card">
+    <h4>Imagens do diretório</h4>
+    <p>Usa <code>panelas.png</code>, <code>eletrodomesticos.png</code>, <code>facas.png</code>, <code>cafe,cha,chocolate.png</code> e <code>acessorios.png</code> já existentes.</p>
+  </div>
+  <div class="note-card">
+    <h4>Produtos do catálogo</h4>
+    <p>Chips de produto extraídos das páginas do PDF: sistemas de cozinha, Power Blender, MaXtractor, jogas de facas, ExperTea, espresso etc.</p>
+  </div>
+  <div class="note-card">
+    <h4>Download do catálogo</h4>
+    <p>Faixa final com link direto para <code>catalogo-produtos.pdf</code>. Contagem de páginas e formato visíveis.</p>
+  </div>
+</div>

@@ -1,0 +1,295 @@
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Raleway', 'Segoe UI', sans-serif; background: #f5f0e8; }
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Raleway:wght@400;600;700&display=swap');
+
+  .page-q { padding: 0 0 24px; }
+  .page-q h2 { font-size: 1.3rem; margin-bottom: 6px; }
+  .page-q p.subtitle { margin-bottom: 24px; }
+
+  /* ---- shared palette ---- */
+  :root {
+    --navy:  #1B2B5E;
+    --gold:  #C9A44A;
+    --gold-l:#E2BF72;
+    --cream: #FAF7F2;
+    --cream2:#F2EBD9;
+    --text:  #1A1A2E;
+  }
+
+  /* ---- card wrappers ---- */
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .card { cursor: pointer; border-radius: 14px; overflow: hidden; border: 2px solid transparent;
+    background: white; box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    transition: border-color .2s, box-shadow .2s; }
+  .card.selected { border-color: var(--gold) !important; box-shadow: 0 0 0 3px rgba(201,164,74,.25); }
+  .card-label { padding: 12px 16px; background: var(--navy); color: white;
+    font-size: .75rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; display: flex; align-items: center; gap: 8px; }
+  .card-label .ltr { width: 22px; height: 22px; border-radius: 50%; background: var(--gold);
+    color: var(--navy); display: flex; align-items: center; justify-content: center; font-size: .72rem; font-weight: 800; }
+  .card-body { padding: 14px; }
+  .card-body h3 { font-size: .85rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+  .card-body p { font-size: .75rem; color: #555; line-height: 1.5; margin-bottom: 10px; }
+  .pros-mini { font-size: .7rem; color: #2D7A52; font-weight: 600; }
+  .cons-mini { font-size: .7rem; color: #c0392b; font-weight: 600; margin-top: 3px; }
+
+  /* ========  MOCKUP A — Bento Grid  ======== */
+  .bento {
+    background: var(--cream);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+  .bento-header {
+    background: var(--navy);
+    padding: 10px 14px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .bento-header span { color: var(--gold-l); font-size: .65rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+  .bento-header em { color: white; font-family: Georgia, serif; font-style: italic; font-size: .85rem; }
+  .bento-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: 100px 80px;
+    gap: 4px; padding: 4px;
+  }
+  .bento-cell {
+    border-radius: 6px; overflow: hidden; position: relative;
+    display: flex; align-items: flex-end;
+  }
+  .bento-cell.main { grid-row: 1 / 3; }
+  .bento-cell img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .bento-cell-label {
+    position: relative; z-index: 2;
+    background: linear-gradient(transparent, rgba(27,43,94,.85));
+    width: 100%; padding: 6px 8px;
+    color: white; font-size: .62rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  }
+  .bento-cell.accent { background: var(--gold); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 3px; }
+  .bento-cell.accent span { font-size: .6rem; font-weight: 700; color: var(--navy); text-align: center; text-transform: uppercase; letter-spacing: .06em; }
+  .bento-cell.accent strong { font-size: .72rem; color: var(--navy); font-weight: 800; }
+  .bento-download {
+    margin: 4px; border-radius: 6px;
+    background: var(--navy); padding: 7px 10px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .bento-download span { color: rgba(255,255,255,.7); font-size: .62rem; }
+  .bento-download button { background: var(--gold); color: var(--navy); border: none; border-radius: 4px; padding: 3px 10px; font-size: .62rem; font-weight: 700; cursor: pointer; }
+
+  /* ========  MOCKUP B — Alternating Blocks  ======== */
+  .alt-wrap { background: var(--cream); border-radius: 10px; overflow: hidden; margin-bottom: 12px; }
+  .alt-header { background: var(--navy); padding: 10px 14px; }
+  .alt-header span { color: var(--gold-l); font-size: .65rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; display: block; }
+  .alt-header em { color: white; font-family: Georgia, serif; font-style: italic; font-size: .85rem; }
+  .alt-block {
+    display: flex; align-items: stretch;
+    border-bottom: 1px solid rgba(201,164,74,.15);
+  }
+  .alt-block.rev { flex-direction: row-reverse; }
+  .alt-img { width: 38%; flex-shrink: 0; background: var(--cream2); overflow: hidden; min-height: 70px; position: relative; }
+  .alt-img img { width: 100%; height: 100%; object-fit: cover; }
+  .alt-content { flex: 1; padding: 10px 12px; }
+  .alt-cat-tag { font-size: .56rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); margin-bottom: 3px; }
+  .alt-content h4 { font-family: Georgia, serif; font-size: .78rem; color: var(--navy); margin-bottom: 3px; }
+  .alt-content p { font-size: .62rem; color: #666; line-height: 1.4; }
+  .alt-products { display: flex; gap: 4px; margin-top: 6px; flex-wrap: wrap; }
+  .alt-chip { background: var(--cream2); border: 1px solid rgba(201,164,74,.3); border-radius: 3px; padding: 2px 6px; font-size: .55rem; color: var(--navy); font-weight: 600; }
+  .alt-download { margin: 6px; padding: 6px 10px; background: linear-gradient(135deg, var(--navy), #253580); border-radius: 6px; display: flex; align-items: center; justify-content: space-between; }
+  .alt-download span { color: rgba(255,255,255,.75); font-size: .6rem; }
+  .alt-download button { background: var(--gold); color: var(--navy); border: none; border-radius: 4px; padding: 3px 10px; font-size: .6rem; font-weight: 700; cursor: pointer; }
+
+  /* ========  MOCKUP C — Cards + Spotlight  ======== */
+  .sp-wrap { background: var(--cream); border-radius: 10px; overflow: hidden; margin-bottom: 12px; }
+  .sp-header { background: var(--navy); padding: 10px 14px; }
+  .sp-header span { color: var(--gold-l); font-size: .65rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; display: block; }
+  .sp-header em { color: white; font-family: Georgia, serif; font-style: italic; font-size: .85rem; }
+  .sp-cats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; padding: 6px; }
+  .sp-cat { border-radius: 6px; overflow: hidden; position: relative; aspect-ratio: 3/4; }
+  .sp-cat img { width: 100%; height: 100%; object-fit: cover; }
+  .sp-cat-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 40%, rgba(27,43,94,.85)); display: flex; align-items: flex-end; }
+  .sp-cat-name { color: white; font-size: .55rem; font-weight: 700; padding: 5px; text-align: center; width: 100%; text-transform: uppercase; letter-spacing: .07em; }
+  .sp-line { height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 0 10px 6px; }
+  .sp-spotlight { display: flex; gap: 6px; padding: 0 6px 6px; }
+  .sp-spot-img { width: 38%; border-radius: 6px; overflow: hidden; }
+  .sp-spot-img img { width: 100%; aspect-ratio: 4/3; object-fit: cover; }
+  .sp-spot-info { flex: 1; }
+  .sp-spot-tag { font-size: .55rem; color: var(--gold); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+  .sp-spot-name { font-family: Georgia, serif; color: var(--navy); font-size: .8rem; font-style: italic; margin: 2px 0; }
+  .sp-spot-desc { font-size: .6rem; color: #666; line-height: 1.4; margin-bottom: 5px; }
+  .sp-spot-list { display: flex; flex-wrap: wrap; gap: 3px; }
+  .sp-spot-item { background: var(--navy); color: var(--gold-l); padding: 2px 6px; border-radius: 3px; font-size: .55rem; font-weight: 600; }
+  .sp-download { margin: 4px 6px 6px; padding: 6px 10px; background: var(--cream2); border: 1px solid rgba(201,164,74,.4); border-radius: 6px; display: flex; align-items: center; justify-content: space-between; }
+  .sp-download span { color: var(--navy); font-size: .6rem; }
+  .sp-download button { background: var(--navy); color: var(--gold-l); border: none; border-radius: 4px; padding: 3px 10px; font-size: .6rem; font-weight: 700; cursor: pointer; }
+</style>
+
+<div class="page-q">
+  <h2>Qual layout para a seção de Produtos?</h2>
+  <p class="subtitle">Todos incluem as 5 categorias, exemplos de produtos do catálogo e botão de download. Escolha a estrutura que mais combina com o site.</p>
+</div>
+
+<div class="cards">
+
+  <!-- OPTION A -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-label"><span class="ltr">A</span> Bento Grid</div>
+    <div class="card-body">
+
+      <div class="bento">
+        <div class="bento-header">
+          <span>Linha premium</span>
+          <em>Nossos Produtos</em>
+        </div>
+        <div class="bento-grid">
+          <div class="bento-cell main">
+            <img src="/panelas.png" alt="">
+            <div class="bento-cell-label">Panelas &amp; Frigideiras</div>
+          </div>
+          <div class="bento-cell">
+            <img src="/eletrodomesticos.png" alt="">
+            <div class="bento-cell-label">Eletrodomésticos</div>
+          </div>
+          <div class="bento-cell">
+            <img src="/facas.png" alt="">
+            <div class="bento-cell-label">Facas</div>
+          </div>
+          <div class="bento-cell">
+            <img src="/cafe,cha,chocolate.png" alt="">
+            <div class="bento-cell-label">Café &amp; Chá</div>
+          </div>
+          <div class="bento-cell accent">
+            <strong>+1</strong>
+            <span>Acessórios</span>
+          </div>
+        </div>
+        <div class="bento-download">
+          <span>📄 Catálogo completo Royal Prestige</span>
+          <button>Baixar PDF</button>
+        </div>
+      </div>
+
+      <h3>Grid assimétrico (Bento)</h3>
+      <p>Grade com células de tamanhos diferentes — a principal (panelas) ocupa dobro do espaço. Visual moderno e dinâmico, muito usado em sites premium.</p>
+      <div class="pros-mini">✓ Visual impactante e contemporâneo</div>
+      <div class="pros-mini">✓ Hierarquia clara entre categorias</div>
+      <div class="cons-mini">✗ Menos espaço para texto descritivo</div>
+    </div>
+  </div>
+
+  <!-- OPTION B -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-label"><span class="ltr">B</span> Blocos Alternados</div>
+    <div class="card-body">
+
+      <div class="alt-wrap">
+        <div class="alt-header">
+          <span>Linha premium</span>
+          <em>Nossos Produtos</em>
+        </div>
+
+        <div class="alt-block">
+          <div class="alt-img"><img src="/panelas.png" alt=""></div>
+          <div class="alt-content">
+            <div class="alt-cat-tag">Panelas &amp; Frigideiras</div>
+            <h4>Sistemas de Cozinha Royal Prestige</h4>
+            <p>Cozinhe sem óleo em aço cirúrgico. Garantia de 50 anos.</p>
+            <div class="alt-products">
+              <span class="alt-chip">15 Peças</span>
+              <span class="alt-chip">Clássico 7 Pç</span>
+              <span class="alt-chip">Wok</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="alt-block rev">
+          <div class="alt-img"><img src="/eletrodomesticos.png" alt=""></div>
+          <div class="alt-content">
+            <div class="alt-cat-tag">Eletrodomésticos</div>
+            <h4>Power Blender &amp; MaXtractor</h4>
+            <p>Motor de 2cv com 6 lâminas. 20 mil RPM.</p>
+            <div class="alt-products">
+              <span class="alt-chip">Power Blender</span>
+              <span class="alt-chip">MaXtractor</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="alt-download">
+          <span>📄 Catálogo completo de produtos</span>
+          <button>Baixar PDF</button>
+        </div>
+      </div>
+
+      <h3>Blocos editoriais alternados</h3>
+      <p>Cada categoria ocupa uma faixa horizontal com imagem alternando esquerda/direita. Estilo editorial elegante, parecido com o do próprio catálogo.</p>
+      <div class="pros-mini">✓ Muito espaço para texto e detalhes</div>
+      <div class="pros-mini">✓ Coerente com o estilo já existente do site</div>
+      <div class="cons-mini">✗ Seção mais longa (scroll)</div>
+    </div>
+  </div>
+
+  <!-- OPTION C -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-label"><span class="ltr">C</span> Categorias + Destaque</div>
+    <div class="card-body">
+
+      <div class="sp-wrap">
+        <div class="sp-header">
+          <span>Linha premium</span>
+          <em>Nossos Produtos</em>
+        </div>
+
+        <div class="sp-cats">
+          <div class="sp-cat">
+            <img src="/panelas.png" alt="">
+            <div class="sp-cat-overlay"><div class="sp-cat-name">Panelas</div></div>
+          </div>
+          <div class="sp-cat">
+            <img src="/eletrodomesticos.png" alt="">
+            <div class="sp-cat-overlay"><div class="sp-cat-name">Eletro</div></div>
+          </div>
+          <div class="sp-cat">
+            <img src="/facas.png" alt="">
+            <div class="sp-cat-overlay"><div class="sp-cat-name">Facas</div></div>
+          </div>
+          <div class="sp-cat">
+            <img src="/cafe,cha,chocolate.png" alt="">
+            <div class="sp-cat-overlay"><div class="sp-cat-name">Café</div></div>
+          </div>
+          <div class="sp-cat">
+            <img src="/acessorios.png" alt="">
+            <div class="sp-cat-overlay"><div class="sp-cat-name">Acessórios</div></div>
+          </div>
+        </div>
+
+        <div class="sp-line"></div>
+
+        <div class="sp-spotlight">
+          <div class="sp-spot-img"><img src="/panelas.png" alt=""></div>
+          <div class="sp-spot-info">
+            <div class="sp-spot-tag">Destaque · Panelas</div>
+            <div class="sp-spot-name">Sistema de Cozinha Profissional 15 Peças</div>
+            <div class="sp-spot-desc">Cozinhe sem óleo em aço cirúrgico 316L. Compatível com indução.</div>
+            <div class="sp-spot-list">
+              <span class="sp-spot-item">Familiar 10 Pç</span>
+              <span class="sp-spot-item">Clássico 7 Pç</span>
+              <span class="sp-spot-item">Wok</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="sp-download">
+          <span>📄 Catálogo completo de produtos</span>
+          <button>Baixar PDF</button>
+        </div>
+      </div>
+
+      <h3>Categorias em strip + Produto em destaque</h3>
+      <p>Tira horizontal com todas as 5 categorias + bloco de destaque de produto abaixo. Compacto e organizado, fácil de expandir depois.</p>
+      <div class="pros-mini">✓ Todas as categorias visíveis de uma vez</div>
+      <div class="pros-mini">✓ Seção compacta, não alonga a página</div>
+      <div class="cons-mini">✗ As categorias ficam pequenas na tira</div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://bemviverdistribuicao.com.br/sitemap.xml
